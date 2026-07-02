@@ -13,10 +13,24 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     if (!isFirebaseConfigured) return;
-    return onAuthStateChanged(getFirebaseAuth(), (nextUser) => {
-      setUser(nextUser);
-      setLoading(false);
-    });
+    const loadingTimeout = window.setTimeout(() => setLoading(false), 5000);
+    const unsubscribe = onAuthStateChanged(
+      getFirebaseAuth(),
+      (nextUser) => {
+        window.clearTimeout(loadingTimeout);
+        setUser(nextUser);
+        setLoading(false);
+      },
+      () => {
+        window.clearTimeout(loadingTimeout);
+        setLoading(false);
+      },
+    );
+
+    return () => {
+      window.clearTimeout(loadingTimeout);
+      unsubscribe();
+    };
   }, []);
 
   return <AuthContext.Provider value={{ user, loading, configured: isFirebaseConfigured }}>{children}</AuthContext.Provider>;

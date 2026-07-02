@@ -28,6 +28,8 @@ button, a { -webkit-tap-highlight-color: transparent; }
 
 .surface { background: rgba(255,250,240,.9); border: 1px solid var(--line); box-shadow: 0 18px 50px rgba(75,46,31,.08); }
 .field { width: 100%; border-radius: 1rem; border: 1px solid rgba(75,46,31,.18); background: #fffdf8; padding: .8rem 1rem; outline: none; transition: .2s; }
+.field-icon { padding-left: 3rem; }
+.field.pl-11 { padding-left: 3rem; }
 .field:focus { border-color: var(--brown); box-shadow: 0 0 0 4px rgba(139,94,60,.1); }
 .btn { display: inline-flex; min-height: 46px; align-items: center; justify-content: center; gap: .55rem; border-radius: 999px; padding: .7rem 1.15rem; font-weight: 800; transition: transform .18s, box-shadow .18s, background .18s; cursor: pointer; }
 .btn:hover { transform: translateY(-1px); }
@@ -47,3 +49,8 @@ button, a { -webkit-tap-highlight-color: transparent; }
   filter: drop-shadow(0 12px 18px rgba(75,46,31,.12));
 }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; animation: none !important; transition: none !important; } }
+
+@media (max-width: 1023px) {
+  .field { min-height: 3.5rem; border-radius: 1.1rem; }
+  .btn { min-height: 3.5rem; }
+}
