@@ -1,5 +1,6 @@
 import {
   createUserWithEmailAndPassword,
+  sendPasswordResetEmail,
   signInWithEmailAndPassword,
   signOut,
   updateProfile,
@@ -14,6 +15,10 @@ export async function register(name: string, email: string, password: string) {
   const credential = await createUserWithEmailAndPassword(getFirebaseAuth(), email, password);
   await updateProfile(credential.user, { displayName: name.trim() });
   return credential;
+}
+
+export async function recoverPassword(email: string) {
+  return sendPasswordResetEmail(getFirebaseAuth(), email.trim());
 }
 
 export async function logout() {

@@ -13,7 +13,7 @@ export function PWARegistration() {
       messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID || "",
       appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID || "",
     });
-    navigator.serviceWorker.register(`/firebase-messaging-sw.js?${config}`).catch(console.error);
+    navigator.serviceWorker.register(`/firebase-messaging-sw.js?${config}`, { updateViaCache: "none" }).catch(console.error);
   }, []);
   return null;
 }

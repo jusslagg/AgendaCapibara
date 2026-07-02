@@ -10,6 +10,9 @@ export async function enableNotifications(userId: string): Promise<void> {
   if (!("Notification" in window) || !("serviceWorker" in navigator)) {
     throw new Error("Este navegador no admite notificaciones push.");
   }
+  if (!window.isSecureContext) {
+    throw new Error("Las notificaciones requieren HTTPS. Probálas desde la app publicada en Vercel.");
+  }
   const permission = await Notification.requestPermission();
   if (permission !== "granted") throw new Error("Necesitamos tu permiso para activar los recordatorios.");
 
@@ -23,10 +26,17 @@ export async function enableNotifications(userId: string): Promise<void> {
     messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID || "",
     appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID || "",
   });
-  const registration = await navigator.serviceWorker.register(`/firebase-messaging-sw.js?${config}`);
+  const vapidKey = process.env.NEXT_PUBLIC_FIREBASE_VAPID_KEY?.trim();
+  if (!vapidKey) throw new Error("Falta configurar la clave de notificaciones VAPID.");
+
+  const registration = await navigator.serviceWorker.register(`/firebase-messaging-sw.js?${config}`, {
+    updateViaCache: "none",
+  });
+  await registration.update();
+  const activeRegistration = await navigator.serviceWorker.ready;
   const token = await getToken(messaging, {
-    vapidKey: process.env.NEXT_PUBLIC_FIREBASE_VAPID_KEY,
-    serviceWorkerRegistration: registration,
+    vapidKey,
+    serviceWorkerRegistration: activeRegistration,
   });
   if (!token) throw new Error("No pudimos crear el token de notificaciones.");
 
