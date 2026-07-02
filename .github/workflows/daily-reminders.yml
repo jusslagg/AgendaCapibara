@@ -1,0 +1,40 @@
+name: Recordatorios diarios
+
+on:
+  schedule:
+    # 11:00 UTC equivale a las 08:00 en Argentina (UTC-3).
+    - cron: "0 11 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: daily-task-reminders
+  cancel-in-progress: false
+
+jobs:
+  send-reminders:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Descargar repositorio
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: functions/package-lock.json
+
+      - name: Instalar dependencias
+        run: npm ci --prefix functions
+
+      - name: Compilar recordatorios
+        run: npm run build --prefix functions
+
+      - name: Enviar recordatorios
+        env:
+          FIREBASE_SERVICE_ACCOUNT_JSON: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_JSON }}
+        run: node functions/lib/run-reminders.js

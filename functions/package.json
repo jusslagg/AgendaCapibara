@@ -1,0 +1,17 @@
+{
+  "name": "capiagenda-reminder-worker",
+  "private": true,
+  "main": "lib/run-reminders.js",
+  "engines": { "node": "22" },
+  "scripts": {
+    "build": "tsc",
+    "run": "npm run build && node lib/run-reminders.js",
+    "lint": "eslint src --ext .ts"
+  },
+  "dependencies": {
+    "firebase-admin": "^13.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.2"
+  }
+}
