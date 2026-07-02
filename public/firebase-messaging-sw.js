@@ -19,8 +19,8 @@ if (config.apiKey && config.projectId) {
     const title = payload.notification?.title || "🦫 Recordatorio capibara";
     const options = {
       body: payload.notification?.body || "Tenés una tarea que necesita atención.",
-      icon: "/icon-192.svg",
-      badge: "/icon-192.svg",
+      icon: "/icon-192.png",
+      badge: "/icon-192.png",
       data: { url: payload.data?.url || "/dashboard" },
     };
     self.registration.showNotification(title, options);

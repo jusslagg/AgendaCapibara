@@ -39,7 +39,7 @@ export async function send48hTaskReminders(db: Firestore, messaging: Messaging):
           body: `Te quedan menos de 48 horas para: ${task.title}`,
         },
         data: { taskId: taskDoc.id, url: `/tasks/${taskDoc.id}/edit` },
-        webpush: { notification: { icon: "/icon-192.svg", badge: "/icon-192.svg" } },
+        webpush: { notification: { icon: "/icon-192.png", badge: "/icon-192.png" } },
       });
       delivered ||= response.successCount > 0;
 

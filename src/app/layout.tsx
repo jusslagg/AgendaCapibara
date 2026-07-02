@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   description: "Organizá tus tareas sin entrar en pánico.",
   manifest: "/manifest.json",
   appleWebApp: { capable: true, title: "CapiAgenda", statusBarStyle: "default" },
-  icons: { icon: "/icon-192.svg", apple: "/icon-192.svg" },
+  icons: { icon: "/icon-192.png", apple: "/icon-192.png" },
 };
 
 export const viewport: Viewport = { themeColor: "#4B2E1F", width: "device-width", initialScale: 1 };
