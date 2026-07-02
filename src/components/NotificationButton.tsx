@@ -16,7 +16,7 @@ export function NotificationButton({ compact = false }: { compact?: boolean }) {
     catch (cause) {
       const message = cause instanceof Error ? cause.message : "No pudimos activar las notificaciones.";
       setError(message.includes("applicationServerKey")
-        ? "Chrome conservó una clave anterior. Recargá la página e intentá nuevamente."
+        ? "Chrome rechazó la clave pública de Firebase. Cerrá y volvé a abrir la app; si continúa, habrá que generar una clave nueva."
         : message);
       setState("idle");
     }

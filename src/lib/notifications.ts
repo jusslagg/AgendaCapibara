@@ -2,8 +2,17 @@ import { deleteToken, getToken } from "firebase/messaging";
 import { doc, getDoc, serverTimestamp, setDoc } from "firebase/firestore";
 import { getFirebaseDb, getFirebaseMessaging } from "./firebase";
 
+// Esta es la clave pública Web Push de CapiAgenda. Está diseñada para enviarse al navegador.
+const FIREBASE_VAPID_PUBLIC_KEY = "BEVt5XruD2a9OoWlRIy7AZ1BK_lgRUDzdnfo4MR_E3eSJ5jgDRQ2Uync_Oh2SyXzL89URee7g9DhCuXEF8x1Qc8";
+
 function tokenDocumentId(token: string) {
   return token.replaceAll("/", "_").slice(0, 1200);
+}
+
+function decodeVapidKey(value: string) {
+  const padding = "=".repeat((4 - (value.length % 4)) % 4);
+  const decoded = atob((value + padding).replaceAll("-", "+").replaceAll("_", "/"));
+  return Uint8Array.from(decoded, (character) => character.charCodeAt(0));
 }
 
 export async function enableNotifications(userId: string): Promise<void> {
@@ -25,15 +34,23 @@ export async function enableNotifications(userId: string): Promise<void> {
     storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET || "",
     messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID || "",
     appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID || "",
+    version: "3",
   });
-  const vapidKey = process.env.NEXT_PUBLIC_FIREBASE_VAPID_KEY?.trim();
-  if (!vapidKey) throw new Error("Falta configurar la clave de notificaciones VAPID.");
+  const configuredVapidKey = process.env.NEXT_PUBLIC_FIREBASE_VAPID_KEY?.trim();
+  const vapidKey = configuredVapidKey?.length === 87 ? configuredVapidKey : FIREBASE_VAPID_PUBLIC_KEY;
 
   const registration = await navigator.serviceWorker.register(`/firebase-messaging-sw.js?${config}`, {
     updateViaCache: "none",
   });
   await registration.update();
   const activeRegistration = await navigator.serviceWorker.ready;
+  const currentSubscription = await activeRegistration.pushManager.getSubscription();
+  if (!currentSubscription) {
+    await activeRegistration.pushManager.subscribe({
+      userVisibleOnly: true,
+      applicationServerKey: decodeVapidKey(vapidKey),
+    });
+  }
   const token = await getToken(messaging, {
     vapidKey,
     serviceWorkerRegistration: activeRegistration,
