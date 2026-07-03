@@ -1,12 +1,12 @@
 import { deleteToken, getToken } from "firebase/messaging";
-import { doc, getDoc, serverTimestamp, setDoc } from "firebase/firestore";
+import { doc, serverTimestamp, setDoc } from "firebase/firestore";
 import { getFirebaseDb, getFirebaseMessaging } from "./firebase";
 
 // Esta es la clave pública Web Push de CapiAgenda. Está diseñada para enviarse al navegador.
 const FIREBASE_VAPID_PUBLIC_KEY = "BEVt5XruD2a9OoWlRIy7AZ1BK_lgRUDzdnfo4MR_E3eSJ5jgDRQ2Uync_Oh2SyXzL89URee7g9DhCuXEF8x1Qc8";
 
-function tokenDocumentId(token: string) {
-  return token.replaceAll("/", "_").slice(0, 1200);
+function tokenDocumentId(userId: string, token: string) {
+  return `${userId}_${token.replaceAll("/", "_")}`.slice(0, 1200);
 }
 
 function decodeVapidKey(value: string) {
@@ -57,13 +57,12 @@ export async function enableNotifications(userId: string): Promise<void> {
   });
   if (!token) throw new Error("No pudimos crear el token de notificaciones.");
 
-  const tokenRef = doc(getFirebaseDb(), "pushTokens", tokenDocumentId(token));
-  const existing = await getDoc(tokenRef);
+  const tokenRef = doc(getFirebaseDb(), "pushTokens", tokenDocumentId(userId, token));
   await setDoc(tokenRef, {
     userId,
     token,
     platform: "web",
-    ...(!existing.exists() ? { createdAt: serverTimestamp() } : {}),
+    createdAt: serverTimestamp(),
     updatedAt: serverTimestamp(),
   }, { merge: true });
 }

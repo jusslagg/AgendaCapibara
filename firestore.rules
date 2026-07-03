@@ -19,7 +19,11 @@ service cloud.firestore {
 
     match /pushTokens/{tokenId} {
       allow read, delete: if ownsExisting();
-      allow create, update: if ownsIncoming()
+      allow create: if ownsIncoming()
+        && request.resource.data.platform == 'web';
+      allow update: if ownsExisting() && ownsIncoming()
+        && request.resource.data.userId == resource.data.userId
+        && request.resource.data.token == resource.data.token
         && request.resource.data.platform == 'web';
     }
 
