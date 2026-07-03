@@ -1,3 +1,5 @@
+import type { CSSProperties } from "react";
+
 type CapiMood = "chef" | "chill" | "holiday" | "sad" | "reading" | "love" | "focus" | "party" | "calm" | "wave";
 
 const positions: Record<CapiMood, string> = {
@@ -13,19 +15,19 @@ const positions: Record<CapiMood, string> = {
   wave: "100% 100%",
 };
 
-const labels: Record<CapiMood, string> = {
-  chef: "Capibara cocinando planes",
-  chill: "Capibara disfrutando una bebida",
-  holiday: "Capibara festivo",
-  sad: "Capibara sensible",
-  reading: "Capibara leyendo",
-  love: "Capibara enamorado de una frutilla",
-  focus: "Capibara concentrado",
-  party: "Capibara celebrando",
-  calm: "Capibara meditando",
-  wave: "Capibara saludando",
+const residentCharacters: Record<CapiMood, string> = {
+  chef: "/resident-evil/rebecca.png",
+  chill: "/resident-evil/survivor.png",
+  holiday: "/resident-evil/wesker.png",
+  sad: "/resident-evil/nemesis.png",
+  reading: "/resident-evil/jill.png",
+  love: "/resident-evil/ada.png",
+  focus: "/resident-evil/leon.png",
+  party: "/resident-evil/chris.png",
+  calm: "/resident-evil/lady.png",
+  wave: "/resident-evil/claire.png",
 };
 
 export function CapiCharacter({ mood, className = "h-36" }: { mood: CapiMood; className?: string }) {
-  return <span role="img" aria-label={labels[mood]} className={`capi-character block shrink-0 ${className}`} style={{ backgroundPosition: positions[mood] }} />;
+  return <span aria-hidden="true" className={`capi-character block shrink-0 ${className}`} style={{ backgroundPosition: positions[mood], "--resident-character": `url(${residentCharacters[mood]})` } as CSSProperties} />;
 }

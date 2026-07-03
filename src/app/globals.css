@@ -74,7 +74,7 @@ html[data-theme="resident-evil"] body {
   background-color: #0d1013;
   background-image:
     linear-gradient(rgba(13,16,19,.88), rgba(13,16,19,.94)),
-    url("/resident-evil-theme.png"),
+    url("/resident-evil/nemesis.png"),
     radial-gradient(circle at 8% 4%, rgba(166,47,55,.28), transparent 25rem);
   background-position: center, right -5rem top 5rem, center;
   background-repeat: no-repeat, no-repeat, no-repeat;
@@ -102,9 +102,9 @@ html[data-theme="resident-evil"] [class*="bg-[#fffaf0]"],
 html[data-theme="resident-evil"] [class*="bg-[#fffdf8]"] { background-color: #171b1f !important; }
 html[data-theme="resident-evil"] [class*="border-[#4b2e1f]"] { border-color: rgba(243,238,230,.12) !important; }
 html[data-theme="resident-evil"] .capi-character {
-  background-image: url("/resident-evil-theme.png");
-  background-position: 15% 35% !important;
-  background-size: 245% auto;
+  background-image: var(--resident-character);
+  background-position: center bottom !important;
+  background-size: contain;
 }
 html[data-theme="resident-evil"] .force-capy .capi-character {
   background-image: url("/capi-states.png");

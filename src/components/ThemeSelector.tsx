@@ -45,7 +45,11 @@ export function ThemeSelector() {
               <div className={`relative mb-3 h-28 overflow-hidden rounded-2xl ${option.id === "capybara" ? "force-capy bg-[#f2d6b8]" : "bg-[#161a1f]"}`}>
                 {option.id === "capybara"
                   ? <CapiCharacter mood="wave" className="absolute -bottom-4 left-1/2 h-32 -translate-x-1/2" />
-                  : <Image alt="Personajes chibi del tema Resident Evil" className="object-contain" fill sizes="(max-width: 640px) 42vw, 220px" src="/resident-evil-theme.png" />}
+                  : <>
+                    <Image alt="" className="absolute -bottom-3 -left-3 h-28 w-auto object-contain" height={112} src="/resident-evil/claire.png" width={84} />
+                    <Image alt="Personajes chibi del tema Resident Evil" className="absolute -bottom-2 left-1/2 h-32 w-auto -translate-x-1/2 object-contain" height={128} src="/resident-evil/leon.png" width={96} />
+                    <Image alt="" className="absolute -bottom-3 -right-3 h-28 w-auto object-contain" height={112} src="/resident-evil/lady.png" width={84} />
+                  </>}
               </div>
               <strong className="block truncate text-sm">{option.name}</strong>
               <span className="mt-1 block text-[11px] font-semibold leading-snug opacity-55">{option.description}</span>
