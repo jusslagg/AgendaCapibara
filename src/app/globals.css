@@ -54,3 +54,65 @@ button, a { -webkit-tap-highlight-color: transparent; }
   .field { min-height: 3.5rem; border-radius: 1.1rem; }
   .btn { min-height: 3.5rem; }
 }
+
+.theme-option { border-color: var(--line); background: color-mix(in srgb, var(--paper) 78%, transparent); color: var(--ink); }
+.theme-option[data-selected="true"] { border-color: var(--green); box-shadow: 0 0 0 3px color-mix(in srgb, var(--green) 18%, transparent); }
+
+html[data-theme="resident-evil"] {
+  --cream: #0d1013;
+  --paper: #171b1f;
+  --brown: #a62f37;
+  --ink: #f3eee6;
+  --green: #849b72;
+  --orange: #a62f37;
+  --line: rgba(243, 238, 230, .13);
+  background: #0d1013;
+}
+
+html[data-theme="resident-evil"] body {
+  color: var(--ink);
+  background-color: #0d1013;
+  background-image:
+    linear-gradient(rgba(13,16,19,.88), rgba(13,16,19,.94)),
+    url("/resident-evil-theme.png"),
+    radial-gradient(circle at 8% 4%, rgba(166,47,55,.28), transparent 25rem);
+  background-position: center, right -5rem top 5rem, center;
+  background-repeat: no-repeat, no-repeat, no-repeat;
+  background-size: cover, min(82vw, 29rem) auto, cover;
+  background-attachment: fixed;
+}
+
+html[data-theme="resident-evil"] .surface { background: rgba(23,27,31,.92); border-color: var(--line); box-shadow: 0 18px 50px rgba(0,0,0,.3); }
+html[data-theme="resident-evil"] .field { color: #f3eee6; background: #111519; border-color: rgba(243,238,230,.16); }
+html[data-theme="resident-evil"] .field::placeholder { color: rgba(243,238,230,.38); }
+html[data-theme="resident-evil"] .btn-primary,
+html[data-theme="resident-evil"] .theme-fab { background: #8f252d !important; color: white; box-shadow: 0 10px 24px rgba(143,37,45,.3); }
+html[data-theme="resident-evil"] .btn-secondary { color: #f3eee6; background: #20262b; border-color: var(--line); }
+html[data-theme="resident-evil"] .app-sidebar,
+html[data-theme="resident-evil"] .mobile-nav,
+html[data-theme="resident-evil"] .settings-link { background-color: rgba(20,24,28,.94) !important; border-color: var(--line); }
+html[data-theme="resident-evil"] .nav-link { color: rgba(243,238,230,.62); }
+html[data-theme="resident-evil"] .nav-link:hover,
+html[data-theme="resident-evil"] .nav-link[data-active="true"] { color: #fff; background: rgba(166,47,55,.23); }
+html[data-theme="resident-evil"] [class*="text-[#4b2e1f]"],
+html[data-theme="resident-evil"] [class*="text-[#8b5e3c]"] { color: rgba(243,238,230,.72) !important; }
+html[data-theme="resident-evil"] [class*="text-[#6f8f4d]"],
+html[data-theme="resident-evil"] [class*="text-[#567238]"] { color: #a7bd91 !important; }
+html[data-theme="resident-evil"] [class*="bg-[#fffaf0]"],
+html[data-theme="resident-evil"] [class*="bg-[#fffdf8]"] { background-color: #171b1f !important; }
+html[data-theme="resident-evil"] [class*="border-[#4b2e1f]"] { border-color: rgba(243,238,230,.12) !important; }
+html[data-theme="resident-evil"] .capi-character {
+  background-image: url("/resident-evil-theme.png");
+  background-position: 15% 35% !important;
+  background-size: 245% auto;
+}
+html[data-theme="resident-evil"] .force-capy .capi-character {
+  background-image: url("/capi-states.png");
+  background-position: 100% 100% !important;
+  background-size: 500% 200%;
+}
+html[data-theme="resident-evil"] .logo-mascot { background: rgba(166,47,55,.16); }
+
+@media (max-width: 640px) {
+  html[data-theme="resident-evil"] body { background-position: center, right -8rem top 6rem, center; background-size: cover, 25rem auto, cover; }
+}

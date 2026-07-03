@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { AuthProvider } from "@/components/AuthProvider";
 import { PWARegistration } from "@/components/PWARegistration";
+import { ThemeInitializer } from "@/components/ThemeInitializer";
 
 export const metadata: Metadata = {
   title: { default: "CapiAgenda", template: "%s · CapiAgenda" },
@@ -15,8 +16,9 @@ export const viewport: Viewport = { themeColor: "#4B2E1F", width: "device-width"
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="es">
+    <html lang="es" suppressHydrationWarning>
       <body>
+        <ThemeInitializer />
         <AuthProvider>{children}</AuthProvider>
         <PWARegistration />
       </body>
