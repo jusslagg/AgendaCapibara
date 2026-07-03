@@ -58,6 +58,7 @@ export function ThemeSelector() {
           );
         })}
       </div>
+      {theme === "resident-evil" && <p className="mt-4 rounded-xl bg-[#8f252d]/12 px-3 py-2 text-xs font-bold leading-relaxed text-[#4b2e1f]/60">El icono Resident Evil se aplicará al instalar. Si CapiAgenda ya está instalada, desinstalala y volvé a instalarla para que Android actualice el icono.</p>}
     </section>
   );
 }

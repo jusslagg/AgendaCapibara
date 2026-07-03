@@ -24,7 +24,7 @@ export default function SettingsPage() {
           <CapiCharacter mood="focus" className="absolute -right-6 -top-5 h-32 opacity-75" />
           <div className="grid h-12 w-12 place-items-center rounded-2xl bg-[#dfa878]/20 text-[#8b5e3c]"><BellRing /></div>
           <h2 className="mt-5 text-xl font-black">Notificaciones push</h2>
-          <p className="mt-2 max-w-[75%] text-sm font-semibold leading-relaxed text-[#4b2e1f]/55">Cada día a las 08:00 revisamos tus tareas. Si una vence en menos de 48 horas, el capibara te avisa.</p>
+          <p className="mt-2 max-w-[75%] text-sm font-semibold leading-relaxed text-[#4b2e1f]/55">Cada día a las 08:00 revisamos tus tareas. Si una vence en menos de 48 horas, la agenda te avisa.</p>
           <div className="mt-5"><NotificationButton /></div>
           <div className="mt-6 space-y-3 border-t border-[#4b2e1f]/8 pt-5 text-xs font-bold text-[#4b2e1f]/50">
             <p className="flex gap-2"><Clock3 size={16} />Zona horaria: Buenos Aires</p>

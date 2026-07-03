@@ -29,7 +29,7 @@ export function TaskCard({ task }: { task: Task }) {
   }
 
   return (
-    <article className="surface group relative overflow-hidden rounded-[1.6rem] p-5 transition hover:-translate-y-0.5 hover:shadow-[0_22px_55px_rgba(75,46,31,.12)] sm:p-6">
+    <article className="task-card surface group relative overflow-hidden rounded-[1.6rem] p-5 transition hover:-translate-y-0.5 hover:shadow-[0_22px_55px_rgba(75,46,31,.12)] sm:p-6">
       <CapiCharacter mood={mood} className="pointer-events-none absolute -bottom-8 right-12 h-24 opacity-[.12] transition group-hover:opacity-20" />
       <div className="flex items-start justify-between gap-4">
         <div className="min-w-0">

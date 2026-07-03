@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Bell, CheckCircle2, ClipboardList, LogOut, Plus, Settings } from "lucide-react";
 import { CapiLogo } from "./CapiLogo";
+import { CapiCharacter } from "./CapiCharacter";
 import { useAuth } from "./AuthProvider";
 import { logout } from "@/lib/auth";
 
@@ -32,7 +33,7 @@ export function AppShell({ children }: { children: ReactNode }) {
         </div>
       </aside>
       <div className="min-w-0 pb-24 lg:pb-0">
-        <header className="app-header flex items-center justify-between px-5 py-5 sm:px-8 lg:hidden"><CapiLogo compact /><Link href="/settings" aria-label="Configuración" className="settings-link grid h-11 w-11 place-items-center rounded-full bg-[#fffaf0]"><Settings size={20} /></Link></header>
+        <header className="app-header relative flex items-center justify-between overflow-hidden px-5 py-5 sm:px-8 lg:hidden"><CapiLogo compact /><CapiCharacter mood="holiday" className="resident-only pointer-events-none absolute -bottom-10 right-16 h-28" /><Link href="/settings" aria-label="Configuración" className="settings-link relative z-10 grid h-11 w-11 place-items-center rounded-full bg-[#fffaf0]"><Settings size={20} /></Link></header>
         {children}
       </div>
       <nav className="mobile-nav fixed inset-x-3 bottom-3 z-40 flex items-center justify-around rounded-[1.4rem] border border-[#4b2e1f]/10 bg-[#fffaf0]/95 p-2 shadow-[0_18px_45px_rgba(75,46,31,.22)] backdrop-blur lg:hidden" aria-label="Navegación móvil">

@@ -2,6 +2,7 @@
   "name": "CapiAgenda",
   "short_name": "CapiAgenda",
   "description": "Organizá tus tareas sin entrar en pánico.",
+  "id": "/",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",

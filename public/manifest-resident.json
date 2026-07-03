@@ -1,0 +1,17 @@
+{
+  "name": "CapiAgenda · Resident Evil",
+  "short_name": "CapiAgenda RE",
+  "description": "Tu agenda con un tema chibi de supervivencia.",
+  "id": "/",
+  "start_url": "/?theme=resident-evil",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#0D1013",
+  "theme_color": "#8F252D",
+  "lang": "es-AR",
+  "icons": [
+    { "src": "/resident-icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "/resident-icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}

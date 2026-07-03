@@ -57,6 +57,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
 
 .theme-option { border-color: var(--line); background: color-mix(in srgb, var(--paper) 78%, transparent); color: var(--ink); }
 .theme-option[data-selected="true"] { border-color: var(--green); box-shadow: 0 0 0 3px color-mix(in srgb, var(--green) 18%, transparent); }
+.resident-only { display: none; }
 
 html[data-theme="resident-evil"] {
   --cream: #0d1013;
@@ -73,7 +74,7 @@ html[data-theme="resident-evil"] body {
   color: var(--ink);
   background-color: #0d1013;
   background-image:
-    linear-gradient(rgba(13,16,19,.88), rgba(13,16,19,.94)),
+    linear-gradient(rgba(13,16,19,.78), rgba(13,16,19,.91)),
     url("/resident-evil/nemesis.png"),
     radial-gradient(circle at 8% 4%, rgba(166,47,55,.28), transparent 25rem);
   background-position: center, right -5rem top 5rem, center;
@@ -105,6 +106,7 @@ html[data-theme="resident-evil"] .capi-character {
   background-image: var(--resident-character);
   background-position: center bottom !important;
   background-size: contain;
+  filter: drop-shadow(0 13px 18px rgba(0,0,0,.5)) drop-shadow(0 0 12px rgba(166,47,55,.18));
 }
 html[data-theme="resident-evil"] .force-capy .capi-character {
   background-image: url("/capi-states.png");
@@ -112,6 +114,11 @@ html[data-theme="resident-evil"] .force-capy .capi-character {
   background-size: 500% 200%;
 }
 html[data-theme="resident-evil"] .logo-mascot { background: rgba(166,47,55,.16); }
+html[data-theme="resident-evil"] .resident-only { display: block; }
+html[data-theme="resident-evil"] .dashboard-stats .capi-character { display: block !important; height: 5.75rem !important; opacity: .5 !important; }
+html[data-theme="resident-evil"] .task-card .capi-character { height: 7.5rem !important; opacity: .38 !important; right: 3.5rem; }
+html[data-theme="resident-evil"] .task-card:hover .capi-character { opacity: .58 !important; }
+html[data-theme="resident-evil"] .app-header { border-bottom: 1px solid rgba(243,238,230,.08); background: linear-gradient(90deg, rgba(13,16,19,.96), rgba(92,22,28,.82)); }
 
 @media (max-width: 640px) {
   html[data-theme="resident-evil"] body { background-position: center, right -8rem top 6rem, center; background-size: cover, 25rem auto, cover; }
