@@ -59,7 +59,27 @@ button, a { -webkit-tap-highlight-color: transparent; }
 
 .theme-option { border-color: var(--line); background: color-mix(in srgb, var(--paper) 78%, transparent); color: var(--ink); }
 .theme-option[data-selected="true"] { border-color: var(--green); box-shadow: 0 0 0 3px color-mix(in srgb, var(--green) 18%, transparent); }
-.resident-only { display: none; }
+.prism-only, .capy-only, .resident-only, .non-prism-only { display: none !important; }
+html:not([data-theme]) .prism-only,
+html[data-theme="prism"] .prism-only,
+html[data-theme="capybara"] .capy-only,
+html[data-theme="resident-evil"] .resident-only,
+html[data-theme="capybara"] .non-prism-only,
+html[data-theme="resident-evil"] .non-prism-only { display: block !important; }
+
+html[data-theme="capybara"] .theme-login-hero,
+html[data-theme="capybara"] .creative-masthead {
+  background: linear-gradient(135deg, #4b2e1f, #7a4f35 58%, #6f8f4d);
+}
+html[data-theme="capybara"] .prism-loading { background: #f7eedc; color: #42291d; }
+html[data-theme="capybara"] .prism-loader > div:first-child { background: #7a9d54; }
+html[data-theme="capybara"] .prism-loader > div:nth-child(2) { background: #dfa878; }
+
+html[data-theme="resident-evil"] .theme-login-hero,
+html[data-theme="resident-evil"] .creative-masthead {
+  background: linear-gradient(135deg, #0d1013, #171b1f 55%, #8f252d);
+}
+html[data-theme="resident-evil"] .prism-loading { background: #0d1013; color: #f3eee6; }
 
 /* Prism Studio — an editorial, CMYK-led workspace for graphic designers. */
 html[data-theme="prism"] {
@@ -104,7 +124,7 @@ html[data-theme="prism"] .nav-link:hover, html[data-theme="prism"] .nav-link[dat
 html[data-theme="prism"] .logo-mascot { border-radius: .35rem !important; outline: 1px solid rgba(255,255,255,.18); box-shadow: 4px 4px 0 #ff1744; }
 html[data-theme="prism"] .brand-wordmark { font-weight: 950; letter-spacing: -.055em; text-transform: uppercase; }
 html[data-theme="prism"] .brand-wordmark span { color: #ff1744; }
-html[data-theme="prism"] .capi-character { background-image: url('/prismagenda-art.png'); background-size: cover; background-position: center !important; border-radius: 50%; filter: saturate(1.15) drop-shadow(0 12px 20px rgba(0,0,0,.45)); }
+html[data-theme="prism"] .capi-character { background-image: url('/prism-logo-transparent.png'); background-size: contain; background-repeat: no-repeat; background-position: center !important; border-radius: 0; filter: drop-shadow(0 12px 20px rgba(0,0,0,.35)); }
 html[data-theme="prism"] .force-capy .capi-character {
   background-image: url('/capi-states.png');
   background-size: 500% 200%;
@@ -177,7 +197,6 @@ html[data-theme="resident-evil"] .force-capy .capi-character {
   background-size: 500% 200%;
 }
 html[data-theme="resident-evil"] .logo-mascot { background: rgba(166,47,55,.16); }
-html[data-theme="resident-evil"] .resident-only { display: block; }
 html[data-theme="resident-evil"] .dashboard-stats .capi-character { display: block !important; height: 5.75rem !important; opacity: .5 !important; }
 html[data-theme="resident-evil"] .task-card .capi-character { height: 7.5rem !important; opacity: .38 !important; right: 3.5rem; }
 html[data-theme="resident-evil"] .task-card:hover .capi-character { opacity: .58 !important; }

@@ -41,8 +41,9 @@ export default function LoginPage() {
 
   return (
     <main className="min-h-dvh overflow-x-hidden px-4 py-4 sm:px-8 lg:grid lg:min-h-screen lg:grid-cols-[1.08fr_.92fr] lg:gap-8 lg:p-8">
-      <section className="relative hidden min-h-[calc(100vh-4rem)] overflow-hidden rounded-[2.5rem] bg-[#0a0a0c] p-12 text-[#fff8ea] lg:flex lg:flex-col lg:justify-between">
-        <Image alt="Ilustración editorial de una diseñadora gráfica trabajando en nuevas ideas" className="absolute inset-0 h-full w-full object-cover" fill priority sizes="55vw" src="/prism-designer.png" />
+      <section className="theme-login-hero relative hidden min-h-[calc(100vh-4rem)] overflow-hidden rounded-[2.5rem] bg-[#0a0a0c] p-12 text-[#fff8ea] lg:flex lg:flex-col lg:justify-between">
+        <Image alt="Ilustración editorial de una diseñadora gráfica trabajando en nuevas ideas" className="prism-only absolute inset-0 h-full w-full object-cover" fill priority sizes="55vw" src="/prism-designer.png" />
+        <CapiCharacter mood="wave" className="non-prism-only absolute -bottom-10 right-6 h-[34rem] opacity-90" />
         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/65 to-black/25" />
         <div className="absolute -right-28 -top-24 h-96 w-96 rounded-full bg-[#dfa878]/20" />
         <div className="absolute -bottom-32 left-28 h-96 w-96 rounded-full bg-[#7a9d54]/20" />

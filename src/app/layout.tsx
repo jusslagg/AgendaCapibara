@@ -17,6 +17,9 @@ export const viewport: Viewport = { themeColor: "#0A0A0C", width: "device-width"
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="es" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: `(function(){try{var q=new URLSearchParams(location.search).get('theme');var s=localStorage.getItem('prismagenda-theme');var t=['prism','capybara','resident-evil'].includes(q)?q:['prism','capybara','resident-evil'].includes(s)?s:'prism';document.documentElement.dataset.theme=t;document.documentElement.style.colorScheme=t==='capybara'?'light':'dark'}catch(e){document.documentElement.dataset.theme='prism'}})();` }} />
+      </head>
       <body>
         <ThemeInitializer />
         <AuthProvider>{children}</AuthProvider>

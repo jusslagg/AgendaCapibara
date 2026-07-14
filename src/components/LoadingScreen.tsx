@@ -8,7 +8,9 @@ export function LoadingScreen() {
           <div className="absolute inset-0 rotate-6 bg-[#00b8ff]" />
           <div className="absolute inset-0 -rotate-3 bg-[#ff1744]" />
           <div className="absolute inset-1 overflow-hidden bg-black">
-            <Image alt="" className="object-cover" fill priority sizes="128px" src="/prismagenda-art.png" />
+            <Image alt="" className="prism-only object-contain p-2" fill priority sizes="128px" src="/prism-logo-transparent.png" />
+            <Image alt="" className="capy-only object-cover" fill priority sizes="128px" src="/icon-capy-wave.png" />
+            <Image alt="" className="resident-only object-cover" fill priority sizes="128px" src="/resident-icon-192.png" />
           </div>
           <span className="absolute -right-3 -top-3 h-5 w-5 rounded-full bg-[#ffd600]" />
         </div>

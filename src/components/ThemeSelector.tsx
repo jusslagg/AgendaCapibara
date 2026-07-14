@@ -45,7 +45,7 @@ export function ThemeSelector() {
             >
               <div className={`relative mb-3 h-28 overflow-hidden rounded-2xl ${option.id === "capybara" ? "force-capy bg-[#f2d6b8]" : "bg-[#161a1f]"}`}>
                 {option.id === "prism"
-                  ? <Image alt="Identidad visual de PrismAgenda" className="h-full w-full object-cover" fill sizes="(max-width: 640px) 100vw, 33vw" src="/prismagenda-art.png" />
+                  ? <Image alt="Identidad visual de PrismAgenda" className="h-full w-full object-contain p-5" fill sizes="(max-width: 640px) 100vw, 33vw" src="/prism-logo-transparent.png" />
                   : option.id === "capybara"
                   ? <CapiCharacter mood="wave" className="absolute -bottom-4 left-1/2 h-32 -translate-x-1/2" />
                   : <>
