@@ -40,5 +40,5 @@ export function InstallPWAButton({ onInstalled }: { onInstalled?: () => void }) 
     const choice = await prompt?.userChoice;
     if (choice?.outcome === "accepted") { setInstalled(true); onInstalled?.(); }
     setPrompt(null);
-  }}><Download size={18} />Instalar CapiAgenda</button>;
+  }}><Download size={18} />Instalar PrismAgenda</button>;
 }

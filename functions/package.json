@@ -1,5 +1,5 @@
 {
-  "name": "capiagenda-reminder-worker",
+  "name": "prismagenda-reminder-worker",
   "private": true,
   "main": "lib/run-reminders.js",
   "engines": { "node": "22" },

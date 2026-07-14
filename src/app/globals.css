@@ -40,7 +40,9 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .nav-link { display: flex; align-items: center; gap: .7rem; border-radius: 1rem; padding: .7rem .9rem; color: rgba(66,41,29,.72); font-weight: 800; }
 .nav-link:hover, .nav-link[data-active="true"] { color: var(--ink); background: rgba(223,168,120,.22); }
 @keyframes breathe { 50% { transform: translateY(-4px) rotate(1deg); } }
+@keyframes prism-pulse { 50% { transform: scale(.96) rotate(-1deg); filter: saturate(1.35); } }
 .capi-breathe { animation: breathe 4s ease-in-out infinite; }
+.prism-loader { animation: prism-pulse 1.8s ease-in-out infinite; }
 .capi-character {
   aspect-ratio: .8;
   background-image: url("/capi-states.png");
@@ -58,6 +60,67 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .theme-option { border-color: var(--line); background: color-mix(in srgb, var(--paper) 78%, transparent); color: var(--ink); }
 .theme-option[data-selected="true"] { border-color: var(--green); box-shadow: 0 0 0 3px color-mix(in srgb, var(--green) 18%, transparent); }
 .resident-only { display: none; }
+
+/* Prism Studio — an editorial, CMYK-led workspace for graphic designers. */
+html[data-theme="prism"] {
+  --cream: #0a0a0c;
+  --paper: #151518;
+  --brown: #ff244f;
+  --ink: #f7f7f2;
+  --green: #b7ff19;
+  --orange: #ff244f;
+  --line: rgba(255,255,255,.13);
+  background: #0a0a0c;
+}
+html[data-theme="prism"] body {
+  color: var(--ink);
+  background:
+    linear-gradient(rgba(10,10,12,.94), rgba(10,10,12,.98)),
+    repeating-linear-gradient(90deg, transparent 0, transparent calc(12.5% - 1px), rgba(255,255,255,.045) 12.5%);
+  background-attachment: fixed;
+}
+html[data-theme="prism"] body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  background: radial-gradient(circle at 88% 10%, rgba(0,184,255,.13), transparent 24rem), radial-gradient(circle at 8% 86%, rgba(255,0,112,.11), transparent 28rem);
+}
+html[data-theme="prism"] .surface { background: rgba(21,21,24,.9); border-color: var(--line); box-shadow: 0 20px 55px rgba(0,0,0,.34); }
+html[data-theme="prism"] .field { color: #f7f7f2; background: #0e0e11; border-color: rgba(255,255,255,.16); border-radius: .35rem; }
+html[data-theme="prism"] .field:focus { border-color: #00b8ff; box-shadow: 0 0 0 3px rgba(0,184,255,.14); }
+html[data-theme="prism"] .field::placeholder { color: rgba(247,247,242,.35); }
+html[data-theme="prism"] .btn { border-radius: .4rem; text-transform: uppercase; letter-spacing: .08em; font-size: .78rem; }
+html[data-theme="prism"] .btn-primary, html[data-theme="prism"] .theme-fab { background: #ff1744 !important; color: white; box-shadow: 7px 7px 0 #00b8ff; }
+html[data-theme="prism"] .btn-primary:hover { background: #ff3159; transform: translate(-1px,-1px); box-shadow: 9px 9px 0 #00b8ff; }
+html[data-theme="prism"] .btn-secondary { color: #f7f7f2; background: #1d1d22; border-color: var(--line); }
+html[data-theme="prism"] .app-sidebar, html[data-theme="prism"] .mobile-nav, html[data-theme="prism"] .settings-link { background: rgba(10,10,12,.94) !important; border-color: var(--line); }
+html[data-theme="prism"] .app-sidebar { border-right: 1px solid rgba(255,255,255,.13); }
+html[data-theme="prism"] .app-sidebar::after { content: "CMYK / 001"; position: absolute; right: -3.2rem; top: 8rem; color: rgba(255,255,255,.25); font: 700 10px ui-monospace, monospace; letter-spacing: .24em; transform: rotate(90deg); }
+html[data-theme="prism"] .app-header { border-bottom: 1px solid var(--line); background: linear-gradient(100deg,#0a0a0c 55%,#ff1744 55% 72%,#00b8ff 72%); }
+html[data-theme="prism"] .nav-link { color: rgba(247,247,242,.58); border: 1px solid transparent; border-radius: .35rem; }
+html[data-theme="prism"] .nav-link:hover, html[data-theme="prism"] .nav-link[data-active="true"] { color: #fff; background: #24242a; border-color: rgba(255,255,255,.12); box-shadow: inset 4px 0 #ff1744; }
+html[data-theme="prism"] .logo-mascot { border-radius: .35rem !important; outline: 1px solid rgba(255,255,255,.18); box-shadow: 4px 4px 0 #ff1744; }
+html[data-theme="prism"] .brand-wordmark { font-weight: 950; letter-spacing: -.055em; text-transform: uppercase; }
+html[data-theme="prism"] .brand-wordmark span { color: #ff1744; }
+html[data-theme="prism"] .capi-character { background-image: url('/prismagenda-art.png'); background-size: cover; background-position: center !important; border-radius: 50%; filter: saturate(1.15) drop-shadow(0 12px 20px rgba(0,0,0,.45)); }
+html[data-theme="prism"] .force-capy .capi-character {
+  background-image: url('/capi-states.png');
+  background-size: 500% 200%;
+  background-position: 100% 100% !important;
+  border-radius: 0;
+  filter: drop-shadow(0 12px 18px rgba(75,46,31,.12));
+}
+html[data-theme="prism"] .theme-option[data-selected="true"] { border-color: #00b8ff; box-shadow: 0 0 0 3px rgba(0,184,255,.16); }
+html[data-theme="prism"] [class*="text-[#4b2e1f]"], html[data-theme="prism"] [class*="text-[#8b5e3c]"] { color: rgba(247,247,242,.65) !important; }
+html[data-theme="prism"] [class*="text-[#6f8f4d]"], html[data-theme="prism"] [class*="text-[#567238]"] { color: #b7ff19 !important; }
+html[data-theme="prism"] [class*="bg-[#fffaf0]"], html[data-theme="prism"] [class*="bg-[#fffdf8]"] { background-color: #151518 !important; }
+html[data-theme="prism"] [class*="border-[#4b2e1f]"] { border-color: rgba(255,255,255,.13) !important; }
+html[data-theme="prism"] .task-card { border-radius: .5rem; }
+html[data-theme="prism"] .dashboard-stats > div:nth-child(1) { border-top: 4px solid #ff1744; }
+html[data-theme="prism"] .dashboard-stats > div:nth-child(2) { border-top: 4px solid #ffd600; }
+html[data-theme="prism"] .dashboard-stats > div:nth-child(3) { border-top: 4px solid #00b8ff; }
 
 html[data-theme="resident-evil"] {
   --cream: #0d1013;

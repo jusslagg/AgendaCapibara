@@ -16,11 +16,13 @@ if (config.apiKey && config.projectId) {
   firebase.initializeApp(config);
   const messaging = firebase.messaging();
   messaging.onBackgroundMessage((payload) => {
-    const title = payload.notification?.title || "🦫 Recordatorio capibara";
+    const title = payload.data?.title || "✦ Recordatorio PrismAgenda";
     const options = {
-      body: payload.notification?.body || "Tenés una tarea que necesita atención.",
-      icon: "/icon-192.png",
-      badge: "/icon-192.png",
+      body: payload.data?.body || "Tenés una tarea que necesita atención.",
+      icon: "/prism-icon-192.png",
+      badge: "/prism-icon-192.png",
+      tag: payload.data?.taskId ? `task-${payload.data.taskId}` : "prismagenda-reminder",
+      renotify: false,
       data: { url: payload.data?.url || "/dashboard" },
     };
     self.registration.showNotification(title, options);

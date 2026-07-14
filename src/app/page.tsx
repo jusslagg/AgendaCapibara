@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useState, type FormEvent } from "react";
-import { ArrowRight, CheckCircle2, Leaf, LockKeyhole, Mail, Sparkles } from "lucide-react";
+import Image from "next/image";
+import { ArrowRight, CheckCircle2, Eye, LockKeyhole, Mail, Sparkles } from "lucide-react";
 import { CapiLogo } from "@/components/CapiLogo";
 import { CapiCharacter } from "@/components/CapiCharacter";
 import { LoadingScreen } from "@/components/LoadingScreen";
@@ -40,31 +41,32 @@ export default function LoginPage() {
 
   return (
     <main className="min-h-dvh overflow-x-hidden px-4 py-4 sm:px-8 lg:grid lg:min-h-screen lg:grid-cols-[1.08fr_.92fr] lg:gap-8 lg:p-8">
-      <section className="relative hidden min-h-[calc(100vh-4rem)] overflow-hidden rounded-[2.5rem] bg-[#4b2e1f] p-12 text-[#fff8ea] lg:flex lg:flex-col lg:justify-between">
+      <section className="relative hidden min-h-[calc(100vh-4rem)] overflow-hidden rounded-[2.5rem] bg-[#0a0a0c] p-12 text-[#fff8ea] lg:flex lg:flex-col lg:justify-between">
+        <Image alt="Ilustración editorial de una diseñadora gráfica trabajando en nuevas ideas" className="absolute inset-0 h-full w-full object-cover" fill priority sizes="55vw" src="/prism-designer.png" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/65 to-black/25" />
         <div className="absolute -right-28 -top-24 h-96 w-96 rounded-full bg-[#dfa878]/20" />
         <div className="absolute -bottom-32 left-28 h-96 w-96 rounded-full bg-[#7a9d54]/20" />
-        <CapiCharacter mood="wave" className="absolute right-8 top-24 h-52 rotate-3 opacity-90" />
         <CapiLogo />
         <div className="relative z-10 max-w-xl">
-          <span className="mb-5 inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 text-sm font-extrabold"><Sparkles size={16} /> Tu rincón de calma productiva</span>
-          <h1 className="text-6xl font-black leading-[1.04] tracking-[-.045em]">Organizá tus tareas.<br /><span className="text-[#dfa878]">Sin entrar en pánico.</span></h1>
-          <p className="mt-7 max-w-lg text-lg leading-relaxed text-[#fff8ea]/70">Fechas claras, prioridades a la vista y un capibara que te avisa antes de que algo venza.</p>
+          <span className="mb-5 inline-flex items-center gap-2 rounded-sm bg-white/10 px-4 py-2 text-sm font-extrabold uppercase tracking-[.14em]"><Sparkles size={16} /> Creative command center</span>
+          <h1 className="text-6xl font-black uppercase leading-[.94] tracking-[-.055em]">Ideas en foco.<br /><span className="text-[#ff1744]">Entregas a tiempo.</span></h1>
+          <p className="mt-7 max-w-lg text-lg leading-relaxed text-[#fff8ea]/70">Briefs, revisiones, piezas y deadlines en una agenda pensada para el ritmo real de un diseñador gráfico.</p>
         </div>
         <div className="relative z-10 grid grid-cols-3 gap-3">
-          {["Recordatorios a tiempo", "Tu agenda, en el bolsillo", "Todo en un solo lugar"].map((item) => <div key={item} className="rounded-2xl border border-white/10 bg-white/5 p-4 text-sm font-bold"><CheckCircle2 className="mb-3 text-[#dfa878]" size={20} />{item}</div>)}
+          {["Briefs bajo control", "Revisiones visibles", "Entregas en fecha"].map((item) => <div key={item} className="rounded-sm border border-white/15 bg-black/35 p-4 text-sm font-bold"><CheckCircle2 className="mb-3 text-[#00b8ff]" size={20} />{item}</div>)}
         </div>
       </section>
 
       <section className="mx-auto flex w-full max-w-md flex-col pb-[max(1.25rem,env(safe-area-inset-bottom))] lg:min-h-[calc(100vh-4rem)] lg:justify-center lg:py-4">
         <div className="mb-4 lg:hidden"><CapiLogo compact /></div>
         <div className="relative mb-5 overflow-hidden rounded-[1.75rem] bg-[#4b2e1f] px-5 py-5 pr-28 text-[#fff8ea] shadow-[0_18px_45px_rgba(75,46,31,.18)] lg:hidden">
-          <span className="inline-flex items-center gap-2 text-xs font-black uppercase tracking-[.12em] text-[#dfa878]"><Leaf size={15} /> Un paso a la vez</span>
+          <span className="inline-flex items-center gap-2 text-xs font-black uppercase tracking-[.12em] text-[#00b8ff]"><Eye size={15} /> Tu estudio, en foco</span>
           <h2 className="mt-2 text-[2rem] font-black leading-tight tracking-[-.04em]">{isRecovering ? "Recuperá tu acceso" : isRegister ? "Creá tu espacio" : "Qué bueno verte"}</h2>
           <p className="mt-1 max-w-56 text-sm font-bold text-[#fff8ea]/65">{isRecovering ? "Te enviaremos un enlace por correo." : isRegister ? "Tu agenda tranquila empieza acá." : "Veamos qué hay para hoy."}</p>
           <CapiCharacter mood={isRecovering ? "reading" : isRegister ? "love" : "wave"} className="absolute -bottom-8 right-1 h-32" />
         </div>
         <div className="mb-8 hidden lg:block">
-          <span className="inline-flex items-center gap-2 text-sm font-extrabold text-[#6f8f4d]"><Leaf size={17} /> Un paso a la vez</span>
+          <span className="inline-flex items-center gap-2 text-sm font-extrabold text-[#6f8f4d]"><Eye size={17} /> Tu estudio, en foco</span>
           <h2 className="mt-3 text-4xl font-black tracking-[-.035em]">{isRecovering ? "Recuperá tu acceso" : isRegister ? "Creá tu espacio" : "Qué bueno verte"}</h2>
           <p className="mt-2 font-semibold text-[#4b2e1f]/55">{isRecovering ? "Te enviaremos un enlace para elegir una contraseña nueva." : isRegister ? "Tu agenda tranquila empieza acá." : "Entrá y veamos qué hay para hoy."}</p>
         </div>
@@ -84,7 +86,7 @@ export default function LoginPage() {
           else setIsRegister((value) => !value);
           setError(""); setNotice("");
         }}>{isRecovering ? "Volver a iniciar sesión" : isRegister ? "¿Ya tenés cuenta? Ingresá" : "¿Primera vez? Creá una cuenta"}</button>
-        <p className="mt-4 text-center text-[11px] font-bold text-[#4b2e1f]/35 lg:mt-10 lg:text-xs">CapiAgenda · hecho para días más livianos</p>
+        <p className="mt-4 text-center text-[11px] font-bold text-[#4b2e1f]/35 lg:mt-10 lg:text-xs">PrismAgenda · diseñá, planificá, entregá</p>
       </section>
     </main>
   );

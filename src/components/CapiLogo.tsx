@@ -1,14 +1,14 @@
-import { CapiCharacter } from "./CapiCharacter";
+import Image from "next/image";
 
 export function CapiLogo({ compact = false }: { compact?: boolean }) {
   return (
     <div className="flex items-center gap-3">
-      <div className={`logo-mascot grid shrink-0 place-items-end overflow-hidden rounded-2xl bg-[#dfa878]/20 ${compact ? "h-11 w-11" : "h-14 w-14"}`}>
-        <CapiCharacter mood="wave" className={`capi-breathe ${compact ? "h-[3.25rem]" : "h-16"}`} />
+      <div className={`logo-mascot relative shrink-0 overflow-hidden rounded-2xl ${compact ? "h-11 w-11" : "h-14 w-14"}`}>
+        <Image alt="" className="object-cover" fill priority src="/prismagenda-art.png" sizes={compact ? "44px" : "56px"} />
       </div>
       <div>
-        <strong className={compact ? "text-lg" : "text-2xl"}>CapiAgenda</strong>
-        {!compact && <p className="text-xs font-bold text-[#b87442]">menos estrés, más claridad</p>}
+        <strong className={`brand-wordmark ${compact ? "text-lg" : "text-2xl"}`}>Prism<span>Agenda</span></strong>
+        {!compact && <p className="text-xs font-bold opacity-55">briefs, ideas &amp; deadlines</p>}
       </div>
     </div>
   );

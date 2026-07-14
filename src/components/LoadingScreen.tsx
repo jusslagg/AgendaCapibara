@@ -1,5 +1,20 @@
-import { CapiCharacter } from "./CapiCharacter";
+import Image from "next/image";
 
 export function LoadingScreen() {
-  return <main className="grid min-h-screen place-items-center"><div className="text-center"><CapiCharacter mood="calm" className="mx-auto h-44 capi-breathe" /><p className="mt-3 font-bold opacity-60">Preparando tu agenda…</p></div></main>;
+  return (
+    <main className="prism-loading grid min-h-screen place-items-center overflow-hidden bg-[#0a0a0c] text-[#f7f7f2]">
+      <div className="relative text-center">
+        <div className="prism-loader relative mx-auto h-32 w-32">
+          <div className="absolute inset-0 rotate-6 bg-[#00b8ff]" />
+          <div className="absolute inset-0 -rotate-3 bg-[#ff1744]" />
+          <div className="absolute inset-1 overflow-hidden bg-black">
+            <Image alt="" className="object-cover" fill priority sizes="128px" src="/prismagenda-art.png" />
+          </div>
+          <span className="absolute -right-3 -top-3 h-5 w-5 rounded-full bg-[#ffd600]" />
+        </div>
+        <p className="mt-7 text-xs font-black uppercase tracking-[.28em]">Preparando el estudio</p>
+        <div className="mx-auto mt-3 flex w-fit gap-1.5" aria-hidden="true"><span className="h-1.5 w-7 bg-[#00b8ff]" /><span className="h-1.5 w-7 bg-[#ff1744]" /><span className="h-1.5 w-7 bg-[#ffd600]" /></div>
+      </div>
+    </main>
+  );
 }

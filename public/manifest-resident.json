@@ -1,6 +1,6 @@
 {
-  "name": "CapiAgenda · Resident Evil",
-  "short_name": "CapiAgenda RE",
+  "name": "PrismAgenda · Resident Evil",
+  "short_name": "PrismAgenda RE",
   "description": "Tu agenda con un tema chibi de supervivencia.",
   "id": "/",
   "start_url": "/?theme=resident-evil",

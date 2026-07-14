@@ -16,6 +16,9 @@ export function TaskForm({ task }: { task?: Task }) {
   const [error, setError] = useState("");
   const minDate = toDateTimeLocal(new Date());
   const defaultDate = toDateTimeLocal(new Date(Date.now() + 24 * 3_600_000));
+  const legacyReminderMinutes = task?.reminderMinutes ?? (task?.remind48h ? 48 * 60 : 24 * 60);
+  const defaultReminderUnit = legacyReminderMinutes % (24 * 60) === 0 ? "days" : "hours";
+  const defaultReminderAmount = defaultReminderUnit === "days" ? legacyReminderMinutes / (24 * 60) : legacyReminderMinutes / 60;
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -27,10 +30,11 @@ export function TaskForm({ task }: { task?: Task }) {
       description: String(data.get("description") || ""),
       dueDate: new Date(String(data.get("dueDate"))),
       priority: String(data.get("priority")) as Priority,
-      remind48h: data.get("remind48h") === "on",
+      reminderEnabled: data.get("reminderEnabled") === "on",
+      reminderMinutes: Math.round(Number(data.get("reminderAmount")) * (data.get("reminderUnit") === "days" ? 24 * 60 : 60)),
     };
     try {
-      if (task) await updateTask(task.id, input, task.dueDate.toDate());
+      if (task) await updateTask(task.id, input, task.dueDate.toDate(), legacyReminderMinutes, task.reminderEnabled ?? task.remind48h ?? true);
       else await createTask(user.uid, input);
       router.push("/dashboard");
     } catch (cause) { setError(cause instanceof Error ? cause.message : "No pudimos guardar la tarea."); setSubmitting(false); }
@@ -40,13 +44,18 @@ export function TaskForm({ task }: { task?: Task }) {
     <form onSubmit={handleSubmit} className="surface relative overflow-hidden rounded-[2rem] p-5 sm:p-8">
       <CapiCharacter mood="chef" className="pointer-events-none absolute -right-7 -top-8 hidden h-36 opacity-25 sm:block" />
       <div className="grid gap-6">
-        <label><span className="mb-2 block text-sm font-black">Título *</span><input className="field" name="title" defaultValue={task?.title} maxLength={100} placeholder="Ej: Enviar presupuesto" required autoFocus /></label>
-        <label><span className="mb-2 block text-sm font-black">Descripción</span><textarea className="field min-h-28 resize-y" name="description" defaultValue={task?.description} maxLength={500} placeholder="Agregá contexto, links o próximos pasos…" /></label>
+        <label><span className="mb-2 block text-sm font-black">Proyecto / pieza *</span><input className="field" name="title" defaultValue={task?.title} maxLength={100} placeholder="Ej: Key visual campaña otoño" required autoFocus /></label>
+        <label><span className="mb-2 block text-sm font-black">Brief y entregables</span><textarea className="field min-h-28 resize-y" name="description" defaultValue={task?.description} maxLength={500} placeholder="Formato, medidas, referencias, links y próxima revisión…" /></label>
         <div className="grid gap-6 sm:grid-cols-2">
           <label><span className="mb-2 block text-sm font-black">Fecha límite *</span><input className="field" name="dueDate" type="datetime-local" min={task ? undefined : minDate} defaultValue={task ? toDateTimeLocal(task.dueDate.toDate()) : defaultDate} required /></label>
           <label><span className="mb-2 block text-sm font-black">Prioridad</span><select className="field" name="priority" defaultValue={task?.priority || "medium"}><option value="low">Baja · puede esperar</option><option value="medium">Media · importante</option><option value="high">Alta · primero esto</option></select></label>
         </div>
-        <label className="flex cursor-pointer items-center justify-between gap-4 rounded-2xl border border-[#4b2e1f]/10 bg-[#7a9d54]/8 p-4"><div className="flex gap-3"><BellRing className="mt-0.5 shrink-0 text-[#6f8f4d]" size={21} /><div><span className="block font-black">Avisarme 48 horas antes</span><span className="text-sm font-semibold text-[#4b2e1f]/50">Recibí una notificación si la tarea sigue pendiente.</span></div></div><input className="h-5 w-5 accent-[#6f8f4d]" name="remind48h" type="checkbox" defaultChecked={task?.remind48h ?? true} /></label>
+        <fieldset className="rounded-2xl border border-[#4b2e1f]/10 bg-[#7a9d54]/8 p-4">
+          <div className="flex items-start gap-3"><BellRing className="mt-0.5 shrink-0 text-[#6f8f4d]" size={21} /><div className="min-w-0 flex-1"><div className="flex items-center justify-between gap-4"><div><legend className="font-black">Recordatorio</legend><p className="text-sm font-semibold text-[#4b2e1f]/50">Elegí con cuánta anticipación querés recibirlo.</p></div><input aria-label="Activar recordatorio" className="h-5 w-5 shrink-0 accent-[#6f8f4d]" name="reminderEnabled" type="checkbox" defaultChecked={task?.reminderEnabled ?? task?.remind48h ?? true} /></div>
+            <div className="mt-4 grid grid-cols-[1fr_1.35fr] gap-3"><label><span className="sr-only">Cantidad</span><input aria-label="Cantidad de anticipación" className="field" name="reminderAmount" type="number" min="1" max="30" step="1" defaultValue={defaultReminderAmount} required /></label><label><span className="sr-only">Unidad</span><select aria-label="Unidad de anticipación" className="field" name="reminderUnit" defaultValue={defaultReminderUnit}><option value="hours">horas antes</option><option value="days">días antes</option></select></label></div>
+            <p className="mt-2 text-xs font-semibold text-[#4b2e1f]/45">La revisión automática se ejecuta cada hora. Máximo: 30 días.</p>
+          </div></div>
+        </fieldset>
         {error && <p role="alert" className="rounded-xl bg-[#c65d4a]/10 p-3 text-sm font-bold text-[#9b4032]">{error}</p>}
         <div className="flex flex-col-reverse gap-3 sm:flex-row sm:justify-end"><button className="btn btn-secondary" type="button" onClick={() => router.back()}>Cancelar</button><button className="btn btn-primary" disabled={submitting} type="submit"><Save size={18} />{submitting ? "Guardando…" : task ? "Guardar cambios" : "Crear tarea"}</button></div>
       </div>

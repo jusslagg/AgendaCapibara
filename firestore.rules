@@ -10,11 +10,19 @@ service cloud.firestore {
       allow read, delete: if ownsExisting();
       allow create: if ownsIncoming()
         && request.resource.data.status in ['pending', 'completed']
-        && request.resource.data.priority in ['low', 'medium', 'high'];
+        && request.resource.data.priority in ['low', 'medium', 'high']
+        && request.resource.data.reminderEnabled is bool
+        && request.resource.data.reminderMinutes is int
+        && request.resource.data.reminderMinutes >= 60
+        && request.resource.data.reminderMinutes <= 43200;
       allow update: if ownsExisting() && ownsIncoming()
         && request.resource.data.userId == resource.data.userId
         && request.resource.data.status in ['pending', 'completed']
-        && request.resource.data.priority in ['low', 'medium', 'high'];
+        && request.resource.data.priority in ['low', 'medium', 'high']
+        && request.resource.data.reminderEnabled is bool
+        && request.resource.data.reminderMinutes is int
+        && request.resource.data.reminderMinutes >= 60
+        && request.resource.data.reminderMinutes <= 43200;
     }
 
     match /pushTokens/{tokenId} {

@@ -1,7 +1,7 @@
 import { cert, getApps, initializeApp, type ServiceAccount } from "firebase-admin/app";
 import { getFirestore } from "firebase-admin/firestore";
 import { getMessaging } from "firebase-admin/messaging";
-import { send48hTaskReminders } from "./index.js";
+import { sendTaskReminders } from "./index.js";
 
 function getServiceAccount(): ServiceAccount {
   const raw = process.env.FIREBASE_SERVICE_ACCOUNT_JSON;
@@ -15,7 +15,7 @@ function getServiceAccount(): ServiceAccount {
 
 async function main() {
   if (!getApps().length) initializeApp({ credential: cert(getServiceAccount()) });
-  const result = await send48hTaskReminders(getFirestore(), getMessaging());
+  const result = await sendTaskReminders(getFirestore(), getMessaging());
   console.log(`Revisión terminada: ${result.checked} tareas, ${result.notified} notificadas, ${result.skippedWithoutToken} sin token.`);
 }
 

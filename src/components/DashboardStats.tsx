@@ -4,7 +4,7 @@ import { CapiCharacter } from "./CapiCharacter";
 export function DashboardStats({ pending, dueSoon, completed }: { pending: number; dueSoon: number; completed: number }) {
   const stats = [
     { label: "Pendientes", value: pending, icon: ClipboardList, mood: "chill" as const, tone: "bg-[#dfa878]/20 text-[#8b5e3c]" },
-    { label: "Próximas 48 h", value: dueSoon, icon: AlarmClock, mood: "focus" as const, tone: "bg-[#e0a928]/16 text-[#8b6811]" },
+    { label: "Vencen pronto", value: dueSoon, icon: AlarmClock, mood: "focus" as const, tone: "bg-[#e0a928]/16 text-[#8b6811]" },
     { label: "Completadas", value: completed, icon: CheckCircle2, mood: "party" as const, tone: "bg-[#7a9d54]/16 text-[#567238]" },
   ];
 

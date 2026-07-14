@@ -1,17 +1,17 @@
 {
-  "name": "CapiAgenda",
-  "short_name": "CapiAgenda",
-  "description": "Organizá tus tareas sin entrar en pánico.",
+  "name": "PrismAgenda",
+  "short_name": "PrismAgenda",
+  "description": "Tu estudio creativo, fechas y entregas en foco.",
   "id": "/",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
   "orientation": "portrait-primary",
-  "background_color": "#F7EEDC",
-  "theme_color": "#4B2E1F",
+  "background_color": "#0A0A0C",
+  "theme_color": "#0A0A0C",
   "lang": "es-AR",
   "icons": [
-    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
-    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+    { "src": "/prism-icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "/prism-icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
   ]
 }

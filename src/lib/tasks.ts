@@ -46,22 +46,25 @@ export async function createTask(userId: string, input: TaskInput) {
     dueDate: Timestamp.fromDate(input.dueDate),
     priority: input.priority,
     status: "pending",
-    remind48h: input.remind48h,
-    notified48h: false,
+    reminderEnabled: input.reminderEnabled,
+    reminderMinutes: input.reminderMinutes,
+    reminderSentAt: null,
     createdAt: serverTimestamp(),
     updatedAt: serverTimestamp(),
   });
 }
 
-export async function updateTask(taskId: string, input: TaskInput, previousDueDate: Date) {
+export async function updateTask(taskId: string, input: TaskInput, previousDueDate: Date, previousReminderMinutes: number, previousReminderEnabled: boolean) {
   const dueDateChanged = input.dueDate.getTime() !== previousDueDate.getTime();
+  const reminderChanged = input.reminderMinutes !== previousReminderMinutes || input.reminderEnabled !== previousReminderEnabled;
   return updateDoc(doc(getFirebaseDb(), "tasks", taskId), {
     title: input.title.trim(),
     description: input.description?.trim() || "",
     dueDate: Timestamp.fromDate(input.dueDate),
     priority: input.priority,
-    remind48h: input.remind48h,
-    ...(dueDateChanged ? { notified48h: false } : {}),
+    reminderEnabled: input.reminderEnabled,
+    reminderMinutes: input.reminderMinutes,
+    ...(dueDateChanged || reminderChanged ? { reminderSentAt: null, notified48h: false } : {}),
     updatedAt: serverTimestamp(),
   });
 }

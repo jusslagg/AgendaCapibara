@@ -7,7 +7,7 @@ export function ThemeInitializer() {
   useEffect(() => {
     const requestedTheme = new URLSearchParams(window.location.search).get("theme");
     const storedTheme = localStorage.getItem(THEME_STORAGE_KEY);
-    applyTheme(isAppTheme(requestedTheme) ? requestedTheme : isAppTheme(storedTheme) ? storedTheme : "capybara");
+    applyTheme(isAppTheme(requestedTheme) ? requestedTheme : isAppTheme(storedTheme) ? storedTheme : "prism");
   }, []);
 
   return null;

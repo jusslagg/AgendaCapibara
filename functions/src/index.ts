@@ -7,20 +7,59 @@ export interface ReminderResult {
   skippedWithoutToken: number;
 }
 
-export async function send48hTaskReminders(db: Firestore, messaging: Messaging): Promise<ReminderResult> {
+const MINUTE_MS = 60 * 1000;
+const LEGACY_48H_MINUTES = 48 * 60;
+const MAX_REMINDER_MINUTES = 30 * 24 * 60;
+
+type ReminderTask = {
+  userId: string;
+  title: string;
+  dueDate: Timestamp;
+  reminderEnabled?: boolean;
+  reminderMinutes?: number;
+  reminderSentAt?: Timestamp | null;
+  remind48h?: boolean;
+  notified48h?: boolean;
+};
+
+export function reminderLeadMinutes(task: ReminderTask): number {
+  if (Number.isFinite(task.reminderMinutes) && task.reminderMinutes! >= 60) {
+    return Math.min(Math.round(task.reminderMinutes!), MAX_REMINDER_MINUTES);
+  }
+  return LEGACY_48H_MINUTES;
+}
+
+export function shouldSendReminder(task: ReminderTask, nowMillis: number): boolean {
+  const enabled = task.reminderEnabled ?? task.remind48h ?? false;
+  const alreadySent = Boolean(task.reminderSentAt) || task.notified48h === true;
+  const dueMillis = task.dueDate.toMillis();
+  return enabled && !alreadySent && dueMillis > nowMillis && dueMillis - reminderLeadMinutes(task) * MINUTE_MS <= nowMillis;
+}
+
+function formatLeadTime(minutes: number): string {
+  if (minutes % (24 * 60) === 0) {
+    const days = minutes / (24 * 60);
+    return `${days} ${days === 1 ? "día" : "días"}`;
+  }
+  const hours = Math.round(minutes / 60);
+  return `${hours} ${hours === 1 ? "hora" : "horas"}`;
+}
+
+export async function sendTaskReminders(db: Firestore, messaging: Messaging): Promise<ReminderResult> {
   const now = Timestamp.now();
-  const limit = Timestamp.fromMillis(now.toMillis() + 48 * 60 * 60 * 1000);
+  const limit = Timestamp.fromMillis(now.toMillis() + MAX_REMINDER_MINUTES * MINUTE_MS);
   const tasks = await db.collection("tasks")
     .where("status", "==", "pending")
-    .where("remind48h", "==", true)
-    .where("notified48h", "==", false)
+    .where("dueDate", ">", now)
     .where("dueDate", "<=", limit)
     .get();
 
-  const result: ReminderResult = { checked: tasks.size, notified: 0, skippedWithoutToken: 0 };
+  const dueTasks = tasks.docs.filter((taskDoc) => shouldSendReminder(taskDoc.data() as ReminderTask, now.toMillis()));
+  const result: ReminderResult = { checked: dueTasks.length, notified: 0, skippedWithoutToken: 0 };
 
-  for (const taskDoc of tasks.docs) {
-    const task = taskDoc.data() as { userId: string; title: string };
+  for (const taskDoc of dueTasks) {
+    const task = taskDoc.data() as ReminderTask;
+    const leadTime = formatLeadTime(reminderLeadMinutes(task));
     const tokensSnapshot = await db.collection("pushTokens").where("userId", "==", task.userId).get();
     const tokenDocs = tokensSnapshot.docs.filter((tokenDoc) => typeof tokenDoc.data().token === "string");
 
@@ -34,12 +73,8 @@ export async function send48hTaskReminders(db: Firestore, messaging: Messaging):
       const chunk = tokenDocs.slice(offset, offset + 500);
       const response = await messaging.sendEachForMulticast({
         tokens: chunk.map((tokenDoc) => tokenDoc.data().token as string),
-        notification: {
-          title: "🦫 Recordatorio capibara",
-          body: `Te quedan menos de 48 horas para: ${task.title}`,
-        },
-        data: { taskId: taskDoc.id, url: `/tasks/${taskDoc.id}/edit` },
-        webpush: { notification: { icon: "/icon-192.png", badge: "/icon-192.png" } },
+        data: { taskId: taskDoc.id, url: `/tasks/${taskDoc.id}/edit`, title: "✦ Recordatorio PrismAgenda", body: `Faltan ${leadTime} para: ${task.title}` },
+        webpush: { headers: { Urgency: "high" } },
       });
       delivered ||= response.successCount > 0;
 
@@ -54,10 +89,13 @@ export async function send48hTaskReminders(db: Firestore, messaging: Messaging):
     }
 
     if (delivered) {
-      await taskDoc.ref.update({ notified48h: true, updatedAt: FieldValue.serverTimestamp() });
+      await taskDoc.ref.update({ reminderSentAt: FieldValue.serverTimestamp(), notified48h: true, updatedAt: FieldValue.serverTimestamp() });
       result.notified += 1;
     }
   }
 
   return result;
 }
+
+/** Backwards-compatible export for any external caller using the old name. */
+export const send48hTaskReminders = sendTaskReminders;

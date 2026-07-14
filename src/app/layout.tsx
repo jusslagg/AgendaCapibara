@@ -5,14 +5,14 @@ import { PWARegistration } from "@/components/PWARegistration";
 import { ThemeInitializer } from "@/components/ThemeInitializer";
 
 export const metadata: Metadata = {
-  title: { default: "CapiAgenda", template: "%s · CapiAgenda" },
-  description: "Organizá tus tareas sin entrar en pánico.",
+  title: { default: "PrismAgenda", template: "%s · PrismAgenda" },
+  description: "Tu estudio creativo, fechas y entregas en foco.",
   manifest: "/manifest.json",
-  appleWebApp: { capable: true, title: "CapiAgenda", statusBarStyle: "default" },
-  icons: { icon: "/icon-192.png", apple: "/icon-192.png" },
+  appleWebApp: { capable: true, title: "PrismAgenda", statusBarStyle: "black-translucent" },
+  icons: { icon: "/prism-icon-192.png", apple: "/prism-icon-192.png" },
 };
 
-export const viewport: Viewport = { themeColor: "#4B2E1F", width: "device-width", initialScale: 1 };
+export const viewport: Viewport = { themeColor: "#0A0A0C", width: "device-width", initialScale: 1 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (

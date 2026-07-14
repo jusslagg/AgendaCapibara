@@ -11,8 +11,12 @@ export interface Task {
   dueDate: Timestamp;
   priority: Priority;
   status: TaskStatus;
-  remind48h: boolean;
-  notified48h: boolean;
+  reminderEnabled: boolean;
+  reminderMinutes: number;
+  reminderSentAt?: Timestamp | null;
+  /** Legacy fields kept while existing Firestore documents are migrated naturally. */
+  remind48h?: boolean;
+  notified48h?: boolean;
   createdAt: Timestamp;
   updatedAt: Timestamp;
 }
@@ -22,5 +26,6 @@ export interface TaskInput {
   description?: string;
   dueDate: Date;
   priority: Priority;
-  remind48h: boolean;
+  reminderEnabled: boolean;
+  reminderMinutes: number;
 }

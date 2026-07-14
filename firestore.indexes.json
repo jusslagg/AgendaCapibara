@@ -14,8 +14,6 @@
       "queryScope": "COLLECTION",
       "fields": [
         { "fieldPath": "status", "order": "ASCENDING" },
-        { "fieldPath": "remind48h", "order": "ASCENDING" },
-        { "fieldPath": "notified48h", "order": "ASCENDING" },
         { "fieldPath": "dueDate", "order": "ASCENDING" }
       ]
     }

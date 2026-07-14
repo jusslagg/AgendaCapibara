@@ -21,5 +21,5 @@ export default function EditTaskPage() {
       setTask(item);
     }).catch((cause: Error) => setError(cause.message)).finally(() => setLoading(false));
   }, [id, user]);
-  return <main className="mx-auto max-w-4xl px-5 pb-10 pt-4 sm:px-8 sm:pt-8"><PageHeading eyebrow="Ajustar el rumbo" title="Editar tarea" description="Si cambiás la fecha, el recordatorio de 48 horas se activa nuevamente." />{loading ? <div className="surface h-96 animate-pulse rounded-[2rem]" /> : error ? <p className="rounded-2xl bg-[#c65d4a]/10 p-4 font-bold text-[#9b4032]">{error}</p> : task && <TaskForm task={task} />}</main>;
+  return <main className="mx-auto max-w-4xl px-5 pb-10 pt-4 sm:px-8 sm:pt-8"><PageHeading eyebrow="Ajustar el rumbo" title="Editar tarea" description="Si cambiás la fecha o la anticipación, el recordatorio se programa nuevamente." />{loading ? <div className="surface h-96 animate-pulse rounded-[2rem]" /> : error ? <p className="rounded-2xl bg-[#c65d4a]/10 p-4 font-bold text-[#9b4032]">{error}</p> : task && <TaskForm task={task} />}</main>;
 }

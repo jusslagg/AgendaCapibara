@@ -2,7 +2,7 @@ import { deleteToken, getToken } from "firebase/messaging";
 import { doc, serverTimestamp, setDoc } from "firebase/firestore";
 import { getFirebaseDb, getFirebaseMessaging } from "./firebase";
 
-// Esta es la clave pública Web Push de CapiAgenda. Está diseñada para enviarse al navegador.
+// Esta es la clave pública Web Push de PrismAgenda. Está diseñada para enviarse al navegador.
 const FIREBASE_VAPID_PUBLIC_KEY = "BEVt5XruD2a9OoWlRIy7AZ1BK_lgRUDzdnfo4MR_E3eSJ5jgDRQ2Uync_Oh2SyXzL89URee7g9DhCuXEF8x1Qc8";
 
 function tokenDocumentId(userId: string, token: string) {

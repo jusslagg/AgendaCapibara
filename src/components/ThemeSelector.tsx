@@ -7,16 +7,17 @@ import { CapiCharacter } from "./CapiCharacter";
 import { applyTheme, isAppTheme, THEME_STORAGE_KEY, type AppTheme } from "@/lib/theme";
 
 const themes: Array<{ id: AppTheme; name: string; description: string }> = [
+  { id: "prism", name: "Prism Studio", description: "Editorial, cromático y creativo." },
   { id: "capybara", name: "Capibara", description: "Cálido, tranquilo y amable." },
   { id: "resident-evil", name: "Resident Evil", description: "Oscuro, táctico y con tensión." },
 ];
 
 export function ThemeSelector() {
-  const [theme, setTheme] = useState<AppTheme>("capybara");
+  const [theme, setTheme] = useState<AppTheme>("prism");
 
   useEffect(() => {
     const storedTheme = localStorage.getItem(THEME_STORAGE_KEY);
-    setTheme(isAppTheme(storedTheme) ? storedTheme : "capybara");
+    setTheme(isAppTheme(storedTheme) ? storedTheme : "prism");
   }, []);
 
   function selectTheme(nextTheme: AppTheme) {
@@ -30,7 +31,7 @@ export function ThemeSelector() {
         <div className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-[#dfa878]/20 text-[#8b5e3c]"><Palette size={21} /></div>
         <div><h2 className="text-xl font-black">Tema visual</h2><p className="mt-1 text-sm font-semibold text-[#4b2e1f]/55">Elegí el estilo de tu agenda. Queda guardado en este celular.</p></div>
       </div>
-      <div className="grid grid-cols-2 gap-3">
+      <div className="grid gap-3 sm:grid-cols-3">
         {themes.map((option) => {
           const selected = theme === option.id;
           return (
@@ -43,7 +44,9 @@ export function ThemeSelector() {
               type="button"
             >
               <div className={`relative mb-3 h-28 overflow-hidden rounded-2xl ${option.id === "capybara" ? "force-capy bg-[#f2d6b8]" : "bg-[#161a1f]"}`}>
-                {option.id === "capybara"
+                {option.id === "prism"
+                  ? <Image alt="Identidad visual de PrismAgenda" className="h-full w-full object-cover" fill sizes="(max-width: 640px) 100vw, 33vw" src="/prismagenda-art.png" />
+                  : option.id === "capybara"
                   ? <CapiCharacter mood="wave" className="absolute -bottom-4 left-1/2 h-32 -translate-x-1/2" />
                   : <>
                     <Image alt="" className="absolute -bottom-3 -left-3 h-28 w-auto object-contain" height={112} src="/resident-evil/claire.png" width={84} />
@@ -58,7 +61,7 @@ export function ThemeSelector() {
           );
         })}
       </div>
-      {theme === "resident-evil" && <p className="mt-4 rounded-xl bg-[#8f252d]/12 px-3 py-2 text-xs font-bold leading-relaxed text-[#4b2e1f]/60">El icono Resident Evil se aplicará al instalar. Si CapiAgenda ya está instalada, desinstalala y volvé a instalarla para que Android actualice el icono.</p>}
+      {theme === "resident-evil" && <p className="mt-4 rounded-xl bg-[#8f252d]/12 px-3 py-2 text-xs font-bold leading-relaxed text-[#4b2e1f]/60">El icono Resident Evil se aplicará al instalar. Si PrismAgenda ya está instalada, desinstalala y volvé a instalarla para que Android actualice el icono.</p>}
     </section>
   );
 }

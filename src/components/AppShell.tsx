@@ -27,7 +27,7 @@ export function AppShell({ children }: { children: ReactNode }) {
         </nav>
         <Link href="/tasks/new" className="btn btn-primary mt-6"><Plus size={18} />Nueva tarea</Link>
         <div className="mt-auto rounded-2xl bg-[#7a9d54]/10 p-4">
-          <p className="truncate text-sm font-black">{user?.displayName || "Capibara organizado"}</p>
+          <p className="truncate text-sm font-black">{user?.displayName || "Estudio creativo"}</p>
           <p className="truncate text-xs font-semibold opacity-50">{user?.email}</p>
           <button onClick={() => logout()} className="mt-4 flex items-center gap-2 text-xs font-black text-[#8b5e3c]" type="button"><LogOut size={15} />Cerrar sesión</button>
         </div>
