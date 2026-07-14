@@ -31,7 +31,7 @@ export default function LoginPage() {
     try {
       if (isRecovering) {
         await recoverPassword(String(data.get("email")));
-        setNotice("Listo. Revisá tu correo para crear una contraseña nueva.");
+        setNotice("Si existe una cuenta con ese email, Firebase enviará el enlace. Revisá Spam y buscá un mensaje de capiagenda.firebaseapp.com.");
       } else if (isRegister) await register(String(data.get("name")), String(data.get("email")), String(data.get("password")));
       else await login(String(data.get("email")), String(data.get("password")));
     } catch (cause) {

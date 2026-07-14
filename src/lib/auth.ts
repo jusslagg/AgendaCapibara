@@ -18,7 +18,9 @@ export async function register(name: string, email: string, password: string) {
 }
 
 export async function recoverPassword(email: string) {
-  return sendPasswordResetEmail(getFirebaseAuth(), email.trim());
+  const auth = getFirebaseAuth();
+  auth.languageCode = "es";
+  return sendPasswordResetEmail(auth, email.trim().toLowerCase());
 }
 
 export async function logout() {
