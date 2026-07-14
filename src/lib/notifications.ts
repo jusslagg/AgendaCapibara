@@ -4,6 +4,11 @@ import { getFirebaseDb, getFirebaseMessaging } from "./firebase";
 
 // Esta es la clave pública Web Push de PrismAgenda. Está diseñada para enviarse al navegador.
 const FIREBASE_VAPID_PUBLIC_KEY = "BEVt5XruD2a9OoWlRIy7AZ1BK_lgRUDzdnfo4MR_E3eSJ5jgDRQ2Uync_Oh2SyXzL89URee7g9DhCuXEF8x1Qc8";
+const NOTIFICATION_STATE_PREFIX = "prismagenda-notifications-enabled";
+
+function notificationStateKey(userId: string) {
+  return `${NOTIFICATION_STATE_PREFIX}:${userId}`;
+}
 
 function tokenDocumentId(userId: string, token: string) {
   return `${userId}_${token.replaceAll("/", "_")}`.slice(0, 1200);
@@ -65,9 +70,23 @@ export async function enableNotifications(userId: string): Promise<void> {
     createdAt: serverTimestamp(),
     updatedAt: serverTimestamp(),
   }, { merge: true });
+  localStorage.setItem(notificationStateKey(userId), "true");
+  window.dispatchEvent(new CustomEvent("prismagenda:notifications-changed", { detail: { userId, enabled: true } }));
 }
 
-export async function disableNotifications(): Promise<void> {
+export async function notificationsAreEnabled(userId: string): Promise<boolean> {
+  if (!("Notification" in window) || !("serviceWorker" in navigator) || Notification.permission !== "granted") return false;
+  const registration = await navigator.serviceWorker.getRegistration("/");
+  const subscription = await registration?.pushManager.getSubscription();
+  const enabled = Boolean(subscription);
+  if (enabled) localStorage.setItem(notificationStateKey(userId), "true");
+  if (!enabled) localStorage.removeItem(notificationStateKey(userId));
+  return enabled;
+}
+
+export async function disableNotifications(userId?: string): Promise<void> {
   const messaging = await getFirebaseMessaging();
   if (messaging) await deleteToken(messaging);
+  if (userId) localStorage.removeItem(notificationStateKey(userId));
+  window.dispatchEvent(new CustomEvent("prismagenda:notifications-changed", { detail: { userId, enabled: false } }));
 }

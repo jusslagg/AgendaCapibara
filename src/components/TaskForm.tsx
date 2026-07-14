@@ -53,7 +53,7 @@ export function TaskForm({ task }: { task?: Task }) {
         <fieldset className="rounded-2xl border border-[#4b2e1f]/10 bg-[#7a9d54]/8 p-4">
           <div className="flex items-start gap-3"><BellRing className="mt-0.5 shrink-0 text-[#6f8f4d]" size={21} /><div className="min-w-0 flex-1"><div className="flex items-center justify-between gap-4"><div><legend className="font-black">Recordatorio</legend><p className="text-sm font-semibold text-[#4b2e1f]/50">Elegí con cuánta anticipación querés recibirlo.</p></div><input aria-label="Activar recordatorio" className="h-5 w-5 shrink-0 accent-[#6f8f4d]" name="reminderEnabled" type="checkbox" defaultChecked={task?.reminderEnabled ?? task?.remind48h ?? true} /></div>
             <div className="mt-4 grid grid-cols-[1fr_1.35fr] gap-3"><label><span className="sr-only">Cantidad</span><input aria-label="Cantidad de anticipación" className="field" name="reminderAmount" type="number" min="1" max="30" step="1" defaultValue={defaultReminderAmount} required /></label><label><span className="sr-only">Unidad</span><select aria-label="Unidad de anticipación" className="field" name="reminderUnit" defaultValue={defaultReminderUnit}><option value="hours">horas antes</option><option value="days">días antes</option></select></label></div>
-            <p className="mt-2 text-xs font-semibold text-[#4b2e1f]/45">La revisión automática se ejecuta cada hora. Máximo: 30 días.</p>
+            <p className="mt-2 text-xs font-semibold text-[#4b2e1f]/45">La revisión automática se ejecuta cada 30 minutos. Máximo: 30 días.</p>
           </div></div>
         </fieldset>
         {error && <p role="alert" className="rounded-xl bg-[#c65d4a]/10 p-3 text-sm font-bold text-[#9b4032]">{error}</p>}

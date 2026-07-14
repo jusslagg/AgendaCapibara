@@ -24,10 +24,10 @@ export default function SettingsPage() {
           <CapiCharacter mood="focus" className="absolute -right-6 -top-5 h-32 opacity-75" />
           <div className="grid h-12 w-12 place-items-center rounded-2xl bg-[#dfa878]/20 text-[#8b5e3c]"><BellRing /></div>
           <h2 className="mt-5 text-xl font-black">Notificaciones push</h2>
-          <p className="mt-2 max-w-[75%] text-sm font-semibold leading-relaxed text-[#4b2e1f]/55">Revisamos tus proyectos cada hora y te avisamos según la anticipación que elijas en cada tarea.</p>
+          <p className="mt-2 max-w-[75%] text-sm font-semibold leading-relaxed text-[#4b2e1f]/55">Revisamos tus proyectos cada 30 minutos y te avisamos según la anticipación que elijas en cada tarea.</p>
           <div className="mt-5"><NotificationButton /></div>
           <div className="mt-6 space-y-3 border-t border-[#4b2e1f]/8 pt-5 text-xs font-bold text-[#4b2e1f]/50">
-            <p className="flex gap-2"><Clock3 size={16} />Frecuencia de revisión: cada hora</p>
+            <p className="flex gap-2"><Clock3 size={16} />Frecuencia de revisión: cada 30 minutos</p>
             <p className="flex gap-2"><ShieldCheck size={16} />Tu token queda asociado solo a tu cuenta.</p>
           </div>
         </section>
