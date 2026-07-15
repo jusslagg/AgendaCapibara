@@ -16,6 +16,9 @@ if (config.apiKey && config.projectId) {
   firebase.initializeApp(config);
   const messaging = firebase.messaging();
   messaging.onBackgroundMessage((payload) => {
+    // FCM displays messages with a notification payload automatically.
+    // Keep this fallback only for older data-only messages.
+    if (payload.notification) return;
     const title = payload.data?.title || "✦ Recordatorio PrismAgenda";
     const options = {
       body: payload.data?.body || "Tenés una tarea que necesita atención.",

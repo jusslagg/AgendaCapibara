@@ -71,10 +71,25 @@ export async function sendTaskReminders(db: Firestore, messaging: Messaging): Pr
     let delivered = false;
     for (let offset = 0; offset < tokenDocs.length; offset += 500) {
       const chunk = tokenDocs.slice(offset, offset + 500);
+      const title = "✦ Recordatorio PrismAgenda";
+      const body = `Faltan ${leadTime} para: ${task.title}`;
+      const url = `/tasks/${taskDoc.id}/edit`;
       const response = await messaging.sendEachForMulticast({
         tokens: chunk.map((tokenDoc) => tokenDoc.data().token as string),
-        data: { taskId: taskDoc.id, url: `/tasks/${taskDoc.id}/edit`, title: "✦ Recordatorio PrismAgenda", body: `Faltan ${leadTime} para: ${task.title}` },
-        webpush: { headers: { Urgency: "high" } },
+        notification: { title, body },
+        data: { taskId: taskDoc.id, url, title, body },
+        webpush: {
+          headers: { Urgency: "high" },
+          notification: {
+            title,
+            body,
+            icon: "/prism-icon-192.png",
+            badge: "/prism-icon-192.png",
+            tag: `task-${taskDoc.id}`,
+            renotify: false,
+            data: { url },
+          },
+        },
       });
       delivered ||= response.successCount > 0;
 
