@@ -2,8 +2,8 @@ name: Recordatorios programados
 
 on:
   schedule:
-    # Revisión cada 30 minutos para respetar avisos cortos sin agotar minutos gratuitos.
-    - cron: "7,37 * * * *"
+    # Revisión cada 5 minutos para respetar con precisión los avisos cortos.
+    - cron: "*/5 * * * *"
   workflow_dispatch:
 
 permissions:
