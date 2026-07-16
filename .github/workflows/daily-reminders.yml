@@ -5,6 +5,15 @@ on:
     # Revisión cada 20 minutos, desplazada del inicio de la hora para reducir demoras.
     - cron: "7,27,47 * * * *"
   workflow_dispatch:
+    inputs:
+      mode:
+        description: Tipo de envío
+        required: true
+        default: reminders
+        type: choice
+        options:
+          - reminders
+          - test-notification
 
 permissions:
   contents: read
@@ -35,6 +44,13 @@ jobs:
         run: npm run build --prefix functions
 
       - name: Enviar recordatorios
+        if: github.event_name == 'schedule' || inputs.mode == 'reminders'
         env:
           FIREBASE_SERVICE_ACCOUNT_JSON: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_JSON }}
         run: node functions/lib/run-reminders.js
+
+      - name: Enviar notificación de prueba
+        if: github.event_name == 'workflow_dispatch' && inputs.mode == 'test-notification'
+        env:
+          FIREBASE_SERVICE_ACCOUNT_JSON: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_JSON }}
+        run: node functions/lib/send-test-notification.js
